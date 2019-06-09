@@ -68,11 +68,7 @@ export default {
         // Submitting Form Method
         async submitForm() {
             try {
-                const postReqData = await axios.post('https://jsonplaceholder.typicode.com/posts', {
-                    title: this.blog.title,
-                    body: this.blog.content,
-                    userId: 1
-                });
+                const postReqData = await axios.post('https://vuejs-blog-app-d0594.firebaseio.com/posts.json', this.blog);
                 console.log(postReqData);
                 this.submitted = true;
             } catch (err) {
