@@ -1,10 +1,10 @@
 <!-- MARKUP / HTML -->
 <template>
   <div id="show-blogs" v-theme:column="'narrow'">
-      <h1>Recent Blog Articles</h1>
+      <h1>List Blog Titles</h1>
       <input type="text" v-model="search" placeholder="Search Blogs">
       <div class="single-blog" v-bind:key="blog.id" v-for="blog in filteredBlogs">
-          <router-link v-bind:to="`/blog/${blog.id}`"><h2 v-color>{{ blog.title | to-uppercase }}</h2></router-link> <!-- CUSTOM DIRECTIVE v-color -->
+          <h2 v-color>{{ blog.title | to-uppercase }}</h2> <!-- CUSTOM DIRECTIVE v-color -->
           <article>{{ blog.body | snippet }}</article>
       </div>
   </div>

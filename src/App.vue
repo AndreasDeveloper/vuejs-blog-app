@@ -1,7 +1,8 @@
 <!-- MARKUP / HTML -->
 <template>
   <div>
-    <show-blog></show-blog>
+    <app-header></app-header>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -10,12 +11,16 @@
 // Importing Components
 import AddBlog from './components/AddBlog';
 import ShowBlog from './components/ShowBlog';
+import ListBlog from './components/ListBlog';
+import Header from './views/Header';
 
 export default {
   // Registering Components
   components: {
     'add-blog': AddBlog,
-    'show-blog': ShowBlog
+    'show-blog': ShowBlog,
+    'list-blog': ListBlog,
+    'app-header': Header
   }
 }
 </script>
