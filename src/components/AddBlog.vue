@@ -3,7 +3,7 @@
   <div id="add-blog">
       <div id="write-blog-area">
       <h2>Add a New Blog Post</h2>
-      <form>
+      <form v-if="!submitted">
           <label>Blog Title:</label>
           <input type="text" required v-model="blog.title">
           <label>Blog Content:</label>
@@ -19,9 +19,19 @@
               <label>Server Only</label>
               <input type="checkbox" value="server only" v-model="blog.categories" />
           </div>
+          <label>Author:</label>
+          <select v-model="blog.author">
+              <option v-bind:key="author.id" v-for="author in authors">{{ author }}</option>
+          </select>
+          <button type="submit" @click.prevent="submitForm">Submit</button>
       </form>
+      <!-- MESSAGE ON SUBMISSION -->
+      <div v-if="submitted" id="submit-success">
+          <h3>Blog Post Successfully Added</h3>
       </div>
 
+      </div>
+      <!-- PREVIEW BLOG AREA -->
       <div id="preview-area">
           <h3>Preview Blog</h3>
           <p>Blog Title: {{ blog.title }}</p>
@@ -31,22 +41,45 @@
           <ul>
               <li v-bind:key="category.id" v-for="category in blog.categories">{{ category }}</li>
           </ul>
+          <p>Author: {{ blog.author }}</p>
       </div>
   </div>
 </template>
 
 <!-- SCRIPT / JS -->
 <script>
+// Importing Axios
+import axios from 'axios';
+
 export default {
     data() {
         return {
             blog: {
                 title: '',
                 content: '',
-                categories: []
-            }
+                categories: [],
+                author: ''
+            },
+            authors: ['AndreasDEV', 'Jonas', 'GLT'], // Seed Author Data
+            submitted: false
         }
     },
+    methods: {
+        // Submitting Form Method
+        async submitForm() {
+            try {
+                const postReqData = await axios.post('https://jsonplaceholder.typicode.com/posts', {
+                    title: this.blog.title,
+                    body: this.blog.content,
+                    userId: 1
+                });
+                console.log(postReqData);
+                this.submitted = true;
+            } catch (err) {
+                throw new Error(err);
+            }
+        }
+    }
 }
 </script>
 
@@ -77,4 +110,6 @@ h2 { font-size: 30px; }
     border: 1px dotted black;
     padding: 5px 20px;
 }
+
+#submit-success { background: green; color: white; }
 </style>
