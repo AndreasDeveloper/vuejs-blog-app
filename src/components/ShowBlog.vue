@@ -2,9 +2,10 @@
 <template>
   <div id="show-blogs" v-theme:column="'narrow'">
       <h1>Recent Blog Articles</h1>
-      <div class="single-blog" v-bind:key="blog.id" v-for="blog in blogs">
-          <h2 v-color>{{ blog.title }}</h2> <!-- CUSTOM DIRECTIVE v-color -->
-          <article>{{ blog.body }}</article>
+      <input type="text" v-model="search" placeholder="Search Blogs">
+      <div class="single-blog" v-bind:key="blog.id" v-for="blog in filteredBlogs">
+          <h2 v-color>{{ blog.title | to-uppercase }}</h2> <!-- CUSTOM DIRECTIVE v-color -->
+          <article>{{ blog.body | snippet }}</article>
       </div>
   </div>
 </template>
@@ -18,17 +19,26 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            blogs: []
+            blogs: [],
+            search: ''
         }
     },
     // Vue's Lifecycle hooks
-    async created() {
+    async created() { // Getting Seed Blog Data
         try {
             const getReqData = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=6');
             this.blogs = getReqData.data;
-            console.log(this.blogs)
         } catch (err) {
             throw new Error(err);
+        }
+    },
+    // Computted Properties
+    computed: {
+        // Filter Blog Titles - Search System
+        filteredBlogs() {
+            return this.blogs.filter(el => {
+                return el.title.match(this.search);
+            });
         }
     }
 }
@@ -46,4 +56,5 @@ export default {
     box-sizing: border-box;
     background: #eee;
 }
+input { width: 96%; padding: 10px; }
 </style>

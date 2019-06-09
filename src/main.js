@@ -5,7 +5,7 @@ import router from './router'
 
 Vue.config.productionTip = false
 
-// Custom Directives
+// * --- Custom Directives --- * \\
 
 // Random Color Directive
 Vue.directive('color', {
@@ -28,6 +28,18 @@ Vue.directive('theme', {
       el.style.padding = '20px';
     }
   }
+});
+
+// * --- Custom Filer --- * \\
+
+// Uppercase Values
+Vue.filter('to-uppercase', value => {
+  return value.toUpperCase();
+});
+
+// Cut the values length to 100 characters at max
+Vue.filter('snippet', value => {
+  return `${value.slice(0, 100)}...`;
 });
 
 // Vue App
