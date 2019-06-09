@@ -1,7 +1,7 @@
 <!-- MARKUP / HTML -->
 <template>
   <div>
-    <add-blog></add-blog>
+    <show-blog></show-blog>
   </div>
 </template>
 
@@ -9,11 +9,13 @@
 <script>
 // Importing Components
 import AddBlog from './components/AddBlog';
+import ShowBlog from './components/ShowBlog';
 
 export default {
   // Registering Components
   components: {
-    'add-blog': AddBlog
+    'add-blog': AddBlog,
+    'show-blog': ShowBlog
   }
 }
 </script>
