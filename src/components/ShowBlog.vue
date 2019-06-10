@@ -5,7 +5,7 @@
       <input type="text" v-model="search" placeholder="Search Blogs">
       <div class="single-blog" v-bind:key="blog.id" v-for="blog in filteredBlogs">
           <router-link v-bind:to="`/blog/${blog.id}`"><h2 v-color>{{ blog.title | to-uppercase }}</h2></router-link> <!-- CUSTOM DIRECTIVE v-color -->
-          <article>{{ blog.body | snippet }}</article>
+          <article>{{ blog.content | snippet }}</article>
       </div>
   </div>
 </template>
@@ -28,8 +28,16 @@ export default {
     // Vue's Lifecycle hooks
     async created() { // Getting Seed Blog Data
         try {
-            const getReqData = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=6');
-            this.blogs = getReqData.data;
+            // Declaring empty blogs array
+            const blogsArray = [];
+
+            const getReqData = await axios.get('https://vuejs-blog-app-d0594.firebaseio.com/posts.json');
+            // Itterating through blogs object with needed data and setting ID key
+            for (const key in getReqData.data) {
+                getReqData.data[key].id = key;
+                blogsArray.push(getReqData.data[key]);
+            }
+            this.blogs = blogsArray;
         } catch (err) {
             throw new Error(err);
         }

@@ -2,7 +2,11 @@
 <template>
   <div id="single-blog">
       <h1>{{ blog.title }}</h1>
-      <article>{{ blog.body }}</article>
+      <article>{{ blog.content }}</article>
+      <p>Author: <strong>{{ blog.author }}</strong></p>
+      <ul>
+          <li v-bind:key="category" v-for="category in blog.categories">{{ category }}</li>
+      </ul>
   </div>
 </template>
 
@@ -21,8 +25,7 @@ export default {
     // Lifecycle Hooks
     async created() {
         try {
-            const getReqData = await axios.get(`https://jsonplaceholder.typicode.com/posts/${this.id}`);
-            console.log(getReqData);
+            const getReqData = await axios.get(`https://vuejs-blog-app-d0594.firebaseio.com/posts/${this.id}.json`);
             this.blog = getReqData.data;
         } catch (err) {
             throw new Error(err);

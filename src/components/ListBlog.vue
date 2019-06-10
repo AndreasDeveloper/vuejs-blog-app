@@ -28,7 +28,7 @@ export default {
     // Vue's Lifecycle hooks
     async created() { // Getting Seed Blog Data
         try {
-            const getReqData = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=6');
+            const getReqData = await axios.get('https://vuejs-blog-app-d0594.firebaseio.com/posts.json');
             this.blogs = getReqData.data;
         } catch (err) {
             throw new Error(err);
